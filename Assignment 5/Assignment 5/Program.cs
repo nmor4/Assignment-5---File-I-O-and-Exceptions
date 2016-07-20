@@ -22,8 +22,10 @@ namespace Assignment_5
             string menuSwitch;
             string fileName;
             string line;
-           
-            //
+            List<string> Students = new List<string> { };
+
+        Start:
+            Console.Clear();
             do
             {Console.Write("1 = Display Grades\n2 = Exit\nEnter a number to select an option: ");
             menuSwitch=( Console.ReadLine());
@@ -37,34 +39,38 @@ namespace Assignment_5
                         try
                         {
                             System.IO.StreamReader file = new System.IO.StreamReader(fileName);
-                            int counter = 0;
+                            
                             while ((line = file.ReadLine()) != null)
                             {
-
-                                System.Console.WriteLine(line);
-                                counter++;
+                                Students.Add(line);
+                                
+                               
                             }
 
                             file.Close();
-                            System.Console.WriteLine("There were {0} lines.", counter);
+                            Console.Clear();
+                            foreach (string student in Students)
+                                System.Console.WriteLine(student);
+                            Console.WriteLine("\nPress any key to return to menu");
 
                             System.Console.ReadKey();
-
+                            goto Start;
                             
                         }
                         catch (System.IO.FileNotFoundException)
                         {
                             Console.Clear();
-                            Console.WriteLine("Error: File not Found - Press any key to return to file selection");
+                            Console.WriteLine("Error: File not Found - Press any key to return to menu");
                             Console.ReadKey();
-                            goto case "1";
+                            goto Start;
 
                         }
 
-                        break;
+                        
                     default:
+                        Students.Clear();
                         Console.Clear();
-                        Console.WriteLine("Error - Enter 1 or 2 to select an option");
+                        Console.WriteLine("Error - Enter 1 or 2 to select an option\n");
 
                         break;                        
                 }
